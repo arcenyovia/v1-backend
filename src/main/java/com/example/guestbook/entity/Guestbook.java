@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class GuestBook extends BaseEntity {
+public class Guestbook extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,8 @@ public class GuestBook extends BaseEntity {
 
     @Column(length = 50, nullable = false)
     private String writer;
+
+    public void changeContent(String content) {
+        this.content = content;
+    }
 }
