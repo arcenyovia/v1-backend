@@ -12,7 +12,11 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization:
 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  sql:
+    init:
+      mode: 
