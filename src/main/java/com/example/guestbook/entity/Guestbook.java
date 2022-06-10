@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "guest_book")
 @Getter
 @Builder
 @AllArgsConstructor
