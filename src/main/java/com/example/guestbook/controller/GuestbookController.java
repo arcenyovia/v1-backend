@@ -5,10 +5,7 @@ import com.example.guestbook.dto.PageRequestDTO;
 import com.example.guestbook.service.GuestbookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,12 +22,33 @@ public class GuestbookController {
         return "hello";
     }
 
+    @PostMapping("/")
+    public void create(GuestbookDTO dto) {
+        service.create(dto);
+    }
+
     @GetMapping("/list")
     public List<GuestbookDTO> list(PageRequestDTO pageRequestDTO) {
 
-        log.info(pageRequestDTO.getPage());
-        log.info(pageRequestDTO.getSize());
 
         return service.getList(pageRequestDTO).getDtoList();
     }
+
+    @GetMapping("/{id}")
+    public GuestbookDTO retrieve(@PathVariable Long id) {
+        return service.read(id);
+    }
+
+    @PutMapping("/{id}")
+    public void update(GuestbookDTO dto) {
+        service.modify(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void remove(@PathVariable Long id) {
+        service.remove(id);
+        log.info("{} been removed", id);
+    }
+
+
 }

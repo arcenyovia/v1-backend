@@ -16,7 +16,7 @@ public class Guestbook extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gno;
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -29,5 +29,9 @@ public class Guestbook extends BaseEntity {
 
     public void changeContent(String content) {
         this.content = content;
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
     }
 }

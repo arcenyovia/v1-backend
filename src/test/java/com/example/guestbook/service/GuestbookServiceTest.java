@@ -30,7 +30,7 @@ class GuestbookServiceTest {
                 .writer("user0")
                 .build();
 
-        System.out.println(service.register(dto));
+        System.out.println(service.create(dto));
     }
 
     @Test
@@ -62,7 +62,7 @@ class GuestbookServiceTest {
                 .size(10)
                 .build();
 
-        Pageable pageable = pageRequestDTO.getPageable(Sort.by("gno"));
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("id"));
 
         Page<Guestbook> result = repository.findAll(pageable);
 

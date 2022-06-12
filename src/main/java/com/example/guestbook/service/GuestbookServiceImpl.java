@@ -12,9 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Service
@@ -24,7 +22,7 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     private final GuestbookRepository repository;
     @Override
-    public Long register(GuestbookDTO dto) {
+    public Long create(GuestbookDTO dto) {
         log.info("DTO-----------------");
         log.info(dto);
 
@@ -34,19 +32,41 @@ public class GuestbookServiceImpl implements GuestbookService {
 
         repository.save(entity);
 
-        return entity.getGno();
+        return entity.getId();
     }
 
     @Override
-    public GuestbookDTO read(Long gno) {
-        Optional<Guestbook> result = repository.findById(gno);
+    public GuestbookDTO read(Long id) {
+        Optional<Guestbook> result = repository.findById(id);
         return result.isPresent() ? entityToDto(result.get()) : null;
+    }
+
+    @Override
+    public void remove(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void modify(GuestbookDTO dto) {
+        Optional<Guestbook> result = repository.findById(dto.getId());
+
+        if (result.isPresent()) {
+            Guestbook entity = result.get();
+
+            entity.changeContent(dto.getContent());
+            entity.changeTitle(dto.getTitle());
+
+            repository.save(entity);
+        }
+
+
+
     }
 
     @Override             //DTO       , EN
     public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO) {
         // SELECT * FROM ? ORDER BY ? DESC
-        Pageable pageable = requestDTO.getPageable(Sort.by("gno")
+        Pageable pageable = requestDTO.getPageable(Sort.by("id")
                 .descending());
 
         Page<Guestbook> result = repository.findAll(pageable);

@@ -7,15 +7,19 @@ import com.example.guestbook.entity.Guestbook;
 
 public interface GuestbookService {
 
-    Long register(GuestbookDTO dto);
+    Long create(GuestbookDTO dto);
 
-    GuestbookDTO read(Long gno);
+    GuestbookDTO read(Long id);
+
+    void remove(Long id);
+
+    void modify(GuestbookDTO dto);
 
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
 
     default Guestbook dtoToEntity(GuestbookDTO dto) {
         return Guestbook.builder()
-                .gno(dto.getGno())
+                .id(dto.getId())
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .writer(dto.getWriter())
@@ -24,7 +28,7 @@ public interface GuestbookService {
 
     default GuestbookDTO entityToDto(Guestbook entity) {
         return GuestbookDTO.builder()
-                .gno(entity.getGno())
+                .id(entity.getId())
                 .title(entity.getTitle())
                 .content(entity.getContent())
                 .writer(entity.getWriter())

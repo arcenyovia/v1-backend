@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class GuestbookDTO {
 
-    private Long gno;
+    private Long id;
     private String title;
     private String content;
     private String writer;
